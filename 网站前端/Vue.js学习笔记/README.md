@@ -1845,12 +1845,12 @@ Vue.use(MyPlugin, { /* 向MyPlugin传入的参数 */ })  // Vue.use会自动阻�
             ></details>
 
         >1. 调用时间在vue原本钩子调用之前：`asyncData`->`fetch`->vue原本钩子（`beforeCreate`->`props->data->computed->watch`->`created`...）。
-        >2. `asyncData`、`fetch`若未返回完成状态的Promise（方法体内`return new Promise((resolve, reject) => {...})`），则不会向下执行之后的钩子（页面渲染失败、不输出页面，可以设置未完成和失败状态的组件或行为）。
+        >2. `asyncData/fetch`若未返回完成状态的Promise（方法体内`return new Promise((resolve, reject) => {...})`），则不会向下执行之后的钩子（页面渲染失败、不输出页面，可以设置未完成和失败状态的组件或行为）。
         >
         >    若要使用`redirect`，不要再运行`reject`
         >3. 最佳实践：
         >
-        >    1. 把页面展示所必须的请求放在`asyncData`、`fetch`，并返回Promise来控制完成后才继续执行代码，这样之后代码需要的异步数据就可以放心使用（否则可能store的数据还未初始化）。
+        >    1. 把页面展示所必须的请求放在`asyncData/fetch`，并返回Promise来控制完成后才继续执行代码，这样之后代码需要的异步数据就可以放心使用（否则store的数据可能还未初始化，`undefined.属性`会报错）。
         >    2. 把客户端的异步请求以及其他操作模板的行为都放在`mounted`及之后（否则可能导致“激活”时客户端DOM和服务端传来的VNODE不同而出问题）。
 
         3. `head`

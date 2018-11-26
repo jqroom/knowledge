@@ -2294,7 +2294,44 @@
         }
         ```
         </details>
+
+    ><details>
+    ><summary>若在<code>for-in/for-of</code>中改变了原对象/原数组，不会影响遍历的项和顺序，但直接使用原对象/原数组会展示修改后的值。</summary>
+    >
+    >e.g.
+    >
+    >```javascript
+    >let originObj = { a: 'aa', b: 'bb', c: 'cc' }
+    >for (let key in originObj) {
+    >  originObj = 1
+    >  console.log(key, originObj)  // 输出：`'a' 1`；`'b' 1`；`'c' 1`
+    >}
+    >// originObj 等于 1
+    >
+    >let originArr = ['a', 'b', 'c']
+    >for (let item of originArr) {
+    >  originArr = [1]
+    >  console.log(item, originArr) // 输出：`'a' [1]`；`'b' [1]`；`'c' [1]`
+    >}
+    >// originArr 等于 [1]
+    >```
+    ></details>
+
     5. Array方法
+
+        ><details>
+        ><summary>若在Array遍历的回调函数中改变了原数组，不会影响遍历函数中的<code>当前值, 索引, 数组整体</code>和原本遍历顺序，但直接使用原数组（不是回调函数内的参数）会展示修改后的数组。</summary>
+        >
+        >```javascript
+        >// e.g.
+        >let originArr = ['a', 'b', 'c']
+        >originArr.forEach((item, index, arr) => {   // 或其他所有Array.prototype.遍历方法
+        >  originArr = [item]
+        >  console.log(arr, originArr)   // 输出：`['a', 'b', 'c'] ['a']`；`['a', 'b', 'c'] ['b']`；`['a', 'b', 'c'] ['c']`
+        >})
+        >// originArr 等于 ['c']
+        >```
+        ></details>
 
         参数均为：`回调函数(当前值, 索引, 数组整体)[, this替代]`。
 
