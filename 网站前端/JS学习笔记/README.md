@@ -2308,6 +2308,7 @@
     >}
     >// originObj 等于 1
     >
+    >
     >let originArr = ['a', 'b', 'c']
     >for (let item of originArr) {
     >  originArr = [1]
